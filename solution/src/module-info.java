@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+/**
+ * @author bakeo
+ *
+ */
+module solution {
+}
