@@ -1,3 +1,4 @@
+
 package solution;
 import java.io.*;
 import java.util.*;
@@ -17,3 +18,4 @@ public class sol181 {
 		System.out.println(ans);
 	}
 }
+
