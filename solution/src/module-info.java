@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author bakeo
- *
- */
-module solution {
-}
