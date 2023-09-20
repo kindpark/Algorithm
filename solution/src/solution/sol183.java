@@ -2,7 +2,7 @@ package solution;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
- 
+//https://www.acmicpc.net/problem/9663
 public class sol183 {
 	public static int[] arr;
 	public static int N;
