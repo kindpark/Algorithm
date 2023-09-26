@@ -31,10 +31,6 @@ public class sol233 {
 			if(op ==1) {
 				int idx = Integer.parseInt(st.nextToken())-1;
 				long num = Long.parseLong(st.nextToken());
-				//arr[idx] = num;
-				//update(start, end, node, idx, before, after)
-				//reset(0, n-1, 1);
-				long before = arr[idx];
 				
 				update(0, n-1, 1, idx, num);
 				arr[idx] = num;
@@ -77,7 +73,8 @@ public class sol233 {
 			return tree[node];
 		}
 		
-		if(start == end) return tree[node] = val;
+		if(start == end) 
+			return tree[node] = val;
 		
 		int mid = (start+end)/2;
 		return tree[node] = (update(start, mid, node*2, idx, val) * update(mid+1, end, node*2+1, idx, val)) % 1000000007;

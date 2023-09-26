@@ -1,95 +1,90 @@
 package solution;
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Solve {
-
-	static int n;
-	static long[] tree,arr;
+	static int[] dx = {0, 1, 0, -1};
+	static int[] dy = {1, 0, -1, 0};
+	static int[][] iceberg;
+	static boolean[][] check;
+	static int n, m;
+	static Queue<Po> q;
 	public static void main(String[] args) throws IOException{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		
 		n = Integer.parseInt(st.nextToken());
-		int m = Integer.parseInt(st.nextToken());
-		int k = Integer.parseInt(st.nextToken());
-		
-		arr = new long[n+1];
-		tree = new long[getTreeSize()];
-		for(int i=0; i<n; i++) {
-			arr[i] = Long.parseLong(br.readLine());
-		}
-		
-		init(0, n-1, 1);
-		while(true) {
-			if(m==0 && k==0) break;
-			
+		m = Integer.parseInt(st.nextToken());
+		iceberg = new int[n+1][m+1];
+		for(int i = 1; i <= n; i++) {
 			st = new StringTokenizer(br.readLine());
-			int op = Integer.parseInt(st.nextToken());
-			if(op ==1) {
-				int idx = Integer.parseInt(st.nextToken())-1;
-				long num = Long.parseLong(st.nextToken());
-				
-				long dif = num - arr[idx];
-				update(0, n-1, 1, idx, dif);
-				arr[idx] = num;
-				
-				m--;
-			}else {
-				int left = Integer.parseInt(st.nextToken())-1;
-				int right = Integer.parseInt(st.nextToken())-1;
-				
-				long sum =pSum(0, n-1, 1, left, right);
-				sb.append(sum+"\n");
-				
-				k--;
+			for(int j = 1; j <= m; j++) {
+				iceberg[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
-		
-		System.out.println(sb.toString());
+		move();
 	}
-    
-    // 트리 사이즈 구하기
-	static int getTreeSize() {
-		int h = (int)Math.ceil(Math.log(n)/Math.log(2)) +1;
-		return (int)Math.pow(2, h)-1;
-	}
-	
-    // 초기값 설정
-	static long init(int start, int end, int node) {
-		if(start == end) {
-			return tree[node] = arr[start];
+	public static void bfs(int x, int y) {
+		q = new LinkedList<>();
+		check = new boolean[n+1][m+1];
+		check[y][x] = true;
+		q.add(new Po(x, y));
+		while(q.isEmpty()) {
+			Po p = q.poll();
+			for(int i = 0; i < 4; i++) {
+				int px = p.x + dx[i];
+				int py = p.y + dy[i];
+				
+				if(px < 1 || py < 1 || px > m || py > n) {
+					continue;
+				}
+				if(check[py][px]) {
+					continue;
+				}
+				if(iceberg[py][px] != 0) {
+					check[py][px] = true;
+					
+					q.add(new Po(px, py));
+				}
+			}
 		}
-		int mid = (start+end)/2;
-		
-		return tree[node] = init(start, mid, node*2) * init(mid+1, end, node*2+1);
 	}
-	
-    // 트리 수정
-	static void update(int start, int end, int node, int idx, long dif) {
-		if(start <= idx && idx <= end) {
-			tree[node] += dif;
-		}else return;
-		
-		if(start == end) return;
-		
-		int mid = (start+end)/2;
-		update(start, mid, node*2, idx, dif);
-		update(mid+1, end, node*2+1, idx, dif);
-		
+	public static int move() {
+		int cnt = 0;
+		check = new boolean[n+1][m+1];
+		for(int i = 1; i < n+1; i++) {
+			for(int j = 1; j < m+1; j++) {
+				if(!check[j][i] && iceberg[j][i] != 0)
+					bfs(j, i);
+					cnt++;
+			}
+		}
+		return cnt;
 	}
-	
-    // 구간 합 구하기
-	static long pSum(int start, int end, int node, int l, int r) {
-		
-		if(r < start || l> end ) 
-			return 1;
-		if(l <= start && end <= r )
-			return tree[node];
-		
-		int mid = (start+end)/2;
-		
-		return pSum(start, mid, node*2, l, r) * pSum(mid+1, end, node*2+1, l, r);  
+	public static int melt(int x, int y) {
+		q.add(new Po(x, y));
+		check = new boolean[n+1][m+1];
+		int melt = 0;
+		while(q.isEmpty()) {
+			Po p = q.poll();
+			for(int i = 0; i < 4; i++) {
+				int px = p.x + dx[i];
+				int py = p.x + dy[i];
+				
+				if(px < 1 || py < 1 || px > m || py > n) {
+					continue;
+				}
+				if(iceberg[py][px] == 0) {
+					continue;
+				}
+				
+			}
+		}
+	}
+}
+class Po{
+	int x, y;
+	Po(int x, int y){
+		this.x = x;
+		this.y = y;
 	}
 }
