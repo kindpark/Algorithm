@@ -5,36 +5,37 @@ import java.io.InputStreamReader;
 import java.io.IOException;
  
 public class queen8 {
-	static int[] arr;
+	static int[] chess;
 	static int n;
-	static int count = 0;
+	static int ans = 0;
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		n = Integer.parseInt(br.readLine());
-		arr = new int[n];
-		nQueen(0);
-		System.out.println(count);
+		chess = new int[n];
+		travel(0);
+		System.out.println(ans);
 	}
-	public static void nQueen(int depth) {
-		if (depth == n) {
-			count++;
+	public static void travel(int move) {
+		if (move == n) {
+			ans++;
 			return;
 		}
 		for (int i = 0; i < n; i++) {
-			arr[depth] = i;
-			if (Possibility(depth)) {
-				nQueen(depth + 1);
+			chess[move] = i;
+			if (promising(move)) {
+				travel(move + 1);
 			}
 		}
 	}
-	public static boolean Possibility(int col) {
-		for (int i = 0; i < col; i++) {
+	public static boolean promising(int column) {
+		for (int i = 0; i < column; i++) {
 			// 같은 행에 위치
-			if (arr[col] == arr[i]) {
+			if (chess[column] == chess[i]) {
 				return false;
 			} 
 			// 대각선에 놓여있는 경우. 
-			else if (Math.abs(col - i) == Math.abs(arr[col] - arr[i])) {
+			else if (Math.abs(column - i) == 
+					Math.abs(chess[column] - chess[i])) {
 				return false;
 			}
 		}	
