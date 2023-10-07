@@ -47,7 +47,6 @@ public class sol236 {
 
     public static void main(String [] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ", false);
 
         n = Integer.parseInt(st.nextToken());
@@ -75,7 +74,7 @@ public class sol236 {
 
         while(!q.isEmpty()) {
             int num = q.poll();
-            bw.write(num+" ");
+            System.out.print(num+" ");
             for (int i = 0; i < edges.get(num).size(); i++) {
                 int c = edges.get(num).get(i);
                 arr[c]--;
@@ -84,8 +83,6 @@ public class sol236 {
                 }
             }
         }
-
-        bw.close();
     }
 }
 */
