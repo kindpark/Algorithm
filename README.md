@@ -1,2 +1,2 @@
 # Algorithm
-baekjoon online judge / programmers
+baekjoon online judge / atcoder
